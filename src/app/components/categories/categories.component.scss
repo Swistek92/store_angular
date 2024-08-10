@@ -1,0 +1,10 @@
+@import "../../../styles.scss";
+
+.Categories {
+  margin-top: 50px;
+  //   z-index: 5;
+  background-color: rgb(197, 197, 197);
+}
+.nav-link {
+  @include underline-transition(1.1);
+}
