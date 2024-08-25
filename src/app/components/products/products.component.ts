@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProductListItem } from '../../types/products.type';
+import { Product } from '../../types/products.type';
 import { ProductsService } from '../../services/products.service';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
@@ -13,7 +13,7 @@ import { SharedModule } from '../../shared/shared.module';
   providers: [ProductsService],
 })
 export class ProductsComponent {
-  products: ProductListItem[] = [];
+  products: Product[] = [];
 
   constructor(productsService: ProductsService) {
     this.products = productsService.getProductsList();

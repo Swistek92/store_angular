@@ -21,12 +21,21 @@
 
       <li class="nav-item d-flex align-items-center">
         <select class="form-select" aria-label="Categories">
+          <option *ngFor="let cat of categoryStore.topLevelCategories$ | async">
+            {{ cat.category }}
+          </option>
+        </select>
+        <!-- </li>
+      <li class="nav-item d-flex align-items-center">
+        <select class="form-select" aria-label="Categories">
           <option selected>Categories</option>
           <option value="1">Man</option>
           <option value="2">Woman</option>
           <option value="3">Kids</option>
         </select>
+      </li> -->
       </li>
+
       <li>
         <form class="form-inline d-flex my-2 my-lg-0">
           <input
