@@ -1,20 +1,29 @@
 <div class="container text-center">
   <div class="row">
-    <div class="col" *ngFor="let product of products">
+    <div class="col" *ngFor="let product of productsStore.getProducts$ | async">
       <div class="card" style="width: 18rem">
-        <img
-          [src]="product.product_img"
-          class="card-img-top"
-          [alt]="product.product_name"
-        />
+        <!-- Dynamiczne przekazanie id produktu w routerLink -->
+        <a [routerLink]="['/product-details', product.id]">
+          <img
+            [src]="'assets/imgs/' + product.product_img"
+            class="card-img-top"
+            [alt]="product.product_name"
+          />
+        </a>
         <div class="card-body">
           <h5 class="card-title">{{ product.product_name }}</h5>
           <p class="card-text">Price: ${{ product.price }}</p>
           <p class="card-text">Ratings: {{ product.ratings }} / 5</p>
+          <p>keywords: {{ product.keywords | json }}</p>
           <div class="mb-3">
             <app-ratings [score]="product.ratings"></app-ratings>
           </div>
-          <a href="#" class="btn btn-primary">Buy Now</a>
+          <!-- Link do zakupu z poprawną ścieżką -->
+          <a
+            [routerLink]="['/product-details', product.id]"
+            class="btn btn-primary"
+            >Buy Now</a
+          >
         </div>
       </div>
     </div>

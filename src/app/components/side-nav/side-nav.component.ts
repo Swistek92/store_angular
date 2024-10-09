@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Category } from '../../types/category.type';
 import { CommonModule } from '@angular/common';
 import { OnDestroy } from '@angular/core';
-import { CategoryStoreItems } from '../../services/categories.storeItem';
+import { CategoryStoreItems } from '../../services/category/categories.storeItem';
 import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-sidenavigation',
   templateUrl: './side-nav.component.html',
@@ -12,6 +13,8 @@ import { Subscription } from 'rxjs';
   imports: [CommonModule],
 })
 export class SidenavigationComponent implements OnDestroy {
+  @Output()
+  subCategoryCliked: EventEmitter<number> = new EventEmitter<number>();
   categories: Category[] = [];
   subscriptions: Subscription = new Subscription();
 
@@ -30,6 +33,10 @@ export class SidenavigationComponent implements OnDestroy {
         : category.parent_category_id === null;
     });
   }
+  onSubCategoryClick(subCategory: Category): void {
+    this.subCategoryCliked.emit(subCategory.id);
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

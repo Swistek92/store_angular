@@ -4,14 +4,17 @@ export const categories: Category[] = [
   {
     id: 1,
     category: 'Men',
+    parent_category_id: null,
   },
   {
     id: 2,
     category: 'Women',
+    parent_category_id: null,
   },
   {
     id: 3,
     category: 'Kids',
+    parent_category_id: null,
   },
   {
     id: 4,

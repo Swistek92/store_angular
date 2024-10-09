@@ -1,21 +1,17 @@
 import { Component } from '@angular/core';
-import { Product } from '../../types/products.type';
-import { ProductsService } from '../../services/products.service';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
-
+import { ProduktsStoreItems } from '../../services/produkt/products.store';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, RouterModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
-  providers: [ProductsService],
 })
 export class ProductsComponent {
-  products: Product[] = [];
-
-  constructor(productsService: ProductsService) {
-    this.products = productsService.getProductsList();
+  constructor(public productsStore: ProduktsStoreItems) {
+    console.log(productsStore);
   }
 }

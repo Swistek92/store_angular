@@ -1,25 +1,30 @@
 import { Router, Request, Response } from 'express';
-import createpool from '../db/db';
-import queries from '../db/queries';
-import { Product } from '../types/products.type';
-const pool = createpool();
+import QueryBuilder from '../db/querys';
+import queryExecutor from '../db/queryExecutor';
 const productsRouter = Router();
-
-const query = (sql: string): Promise<Product[]> => {
-  return new Promise((resolve, reject) => {
-    pool.query(sql, (error: any, results: Product[]) => {
-      if (error) {
-        return reject(error);
-      }
-      resolve(results);
-    });
-  });
-};
+const queryBuilder = new QueryBuilder();
 
 productsRouter.get('/', async (req: Request, res: Response) => {
+  let mainCategoryId = req.query.maincategoryid as string;
+  let subCategoryId = req.query.subcategoryid as string;
+  let keyword = req.query.keyword as string;
+
   try {
-    const products = await query(queries.allProducts);
-    console.log(products);
+    let query: string;
+
+    if (mainCategoryId) {
+      query = queryBuilder.findProductsByMainCategoryId(Number(mainCategoryId));
+    } else if (subCategoryId) {
+      query = queryBuilder.findProductsBySubCategoryId(Number(subCategoryId));
+    } else {
+      query = queryBuilder.getAllProducts();
+    }
+    console.log(keyword);
+    if (keyword) {
+      query = queryBuilder.addKeywordFilter(query, keyword);
+    }
+
+    const products = await queryExecutor(query);
     res.status(200).send(products);
   } catch (error) {
     res.status(500).send(error);
@@ -29,7 +34,9 @@ productsRouter.get('/', async (req: Request, res: Response) => {
 productsRouter.get('/:id', async (req: Request, res: Response) => {
   let id = req.params.id;
   try {
-    const porduct = await query(queries.findAProductWithId + id);
+    const porduct = await queryExecutor(
+      queryBuilder.findProductById(Number(id))
+    );
     console.log(porduct);
     res.status(200).send(porduct);
   } catch (error) {

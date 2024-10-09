@@ -6,6 +6,10 @@
   box-shadow: 1px 0px 14px 0px lightgray;
   height: 97%;
   border-radius: 1em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 
   .section-title {
     padding: 1em;

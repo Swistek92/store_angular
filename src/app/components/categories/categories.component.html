@@ -3,6 +3,6 @@
     *ngFor="let category of cateogryStore.topLevelCategories$ | async"
     class="nav-item"
   >
-    <a class="nav-link" href="#">{{ category.category }}</a>
+    <a (click)="categoryClicked(category)">{{ category.category }}</a>
   </li>
 </ul>
